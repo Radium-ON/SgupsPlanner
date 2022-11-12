@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RGR_BankLoansModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bank_Offers">
+          <Key>
+            <PropertyRef Name="FK_OfferId" />
+            <PropertyRef Name="FK_Bank_RegNumber" />
+          </Key>
+          <Property Name="FK_OfferId" Type="int" Nullable="false" />
+          <Property Name="FK_Bank_RegNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Banks">
+          <Key>
+            <PropertyRef Name="PK_RegNumber" />
+          </Key>
+          <Property Name="PK_RegNumber" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OGRN" Type="nchar" MaxLength="13" Nullable="false" />
+          <Property Name="License" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="PK_ClientId" />
+          </Key>
+          <Property Name="PK_ClientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Passport" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="TIN" Type="nchar" MaxLength="12" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="Seniority" Type="int" Nullable="false" />
+          <Property Name="Salary" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LoanAgreements">
+          <Key>
+            <PropertyRef Name="PK_AgreementId" />
+          </Key>
+          <Property Name="PK_AgreementId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_Bank_RegNumber" Type="int" />
+          <Property Name="FK_ClientId" Type="int" />
+          <Property Name="AgreementNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Interest" Type="real" Nullable="false" />
+          <Property Name="Months" Type="int" Nullable="false" />
+          <Property Name="LoanAmount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Payment" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="ContractDate" Type="datetime" Nullable="false" />
+          <Property Name="IsRepaid" Type="bit" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Offers">
+          <Key>
+            <PropertyRef Name="PK_OfferId" />
+          </Key>
+          <Property Name="PK_OfferId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Interest" Type="real" Nullable="false" />
+          <Property Name="MinLoanAmount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="MaxLoanAmount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="MaxOfMonths" Type="int" Nullable="false" />
+          <Property Name="ActiveLoansNumber" Type="int" />
+          <Property Name="MinSeniority" Type="int" />
+          <Property Name="MinAge" Type="int" />
+        </EntityType>
+        <Association Name="FK__Bank_Offe__FK_Ba__6383C8BA">
+          <End Role="Banks" Type="Self.Banks" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bank_Offers" Type="Self.Bank_Offers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banks">
+              <PropertyRef Name="PK_RegNumber" />
+            </Principal>
+            <Dependent Role="Bank_Offers">
+              <PropertyRef Name="FK_Bank_RegNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bank_Offe__FK_Of__6477ECF3">
+          <End Role="Offers" Type="Self.Offers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bank_Offers" Type="Self.Bank_Offers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offers">
+              <PropertyRef Name="PK_OfferId" />
+            </Principal>
+            <Dependent Role="Bank_Offers">
+              <PropertyRef Name="FK_OfferId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoanAgree__FK_Ba__4E88ABD4">
+          <End Role="Banks" Type="Self.Banks" Multiplicity="0..1" />
+          <End Role="LoanAgreements" Type="Self.LoanAgreements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banks">
+              <PropertyRef Name="PK_RegNumber" />
+            </Principal>
+            <Dependent Role="LoanAgreements">
+              <PropertyRef Name="FK_Bank_RegNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoanAgree__FK_Cl__4F7CD00D">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="LoanAgreements" Type="Self.LoanAgreements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="PK_ClientId" />
+            </Principal>
+            <Dependent Role="LoanAgreements">
+              <PropertyRef Name="FK_ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RGR_BankLoansModelStoreContainer">
+          <EntitySet Name="Bank_Offers" EntityType="Self.Bank_Offers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Banks" EntityType="Self.Banks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoanAgreements" EntityType="Self.LoanAgreements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Offers" EntityType="Self.Offers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Bank_Offe__FK_Ba__6383C8BA" Association="Self.FK__Bank_Offe__FK_Ba__6383C8BA">
+            <End Role="Banks" EntitySet="Banks" />
+            <End Role="Bank_Offers" EntitySet="Bank_Offers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bank_Offe__FK_Of__6477ECF3" Association="Self.FK__Bank_Offe__FK_Of__6477ECF3">
+            <End Role="Offers" EntitySet="Offers" />
+            <End Role="Bank_Offers" EntitySet="Bank_Offers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoanAgree__FK_Ba__4E88ABD4" Association="Self.FK__LoanAgree__FK_Ba__4E88ABD4">
+            <End Role="Banks" EntitySet="Banks" />
+            <End Role="LoanAgreements" EntitySet="LoanAgreements" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoanAgree__FK_Cl__4F7CD00D" Association="Self.FK__LoanAgree__FK_Cl__4F7CD00D">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="LoanAgreements" EntitySet="LoanAgreements" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RGR_BankLoansModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bank">
+          <Key>
+            <PropertyRef Name="PK_RegNumber" />
+          </Key>
+          <Property Name="PK_RegNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OGRN" Type="String" MaxLength="13" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="License" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LoanAgreements" Relationship="Self.FK__LoanAgree__FK_Ba__4E88ABD4" FromRole="Banks" ToRole="LoanAgreements" />
+          <NavigationProperty Name="Offers" Relationship="RGR_BankLoansModel.Bank_Offers" FromRole="Bank" ToRole="Offer" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="PK_ClientId" />
+          </Key>
+          <Property Name="PK_ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Passport" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="TIN" Type="String" MaxLength="12" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Seniority" Type="Int32" Nullable="false" />
+          <Property Name="Salary" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="LoanAgreements" Relationship="Self.FK__LoanAgree__FK_Cl__4F7CD00D" FromRole="Clients" ToRole="LoanAgreements" />
+        </EntityType>
+        <EntityType Name="LoanAgreement">
+          <Key>
+            <PropertyRef Name="PK_AgreementId" />
+          </Key>
+          <Property Name="PK_AgreementId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_Bank_RegNumber" Type="Int32" />
+          <Property Name="FK_ClientId" Type="Int32" />
+          <Property Name="AgreementNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Interest" Type="Single" Nullable="false" />
+          <Property Name="Months" Type="Int32" Nullable="false" />
+          <Property Name="LoanAmount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Payment" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ContractDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsRepaid" Type="Boolean" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Bank" Relationship="Self.FK__LoanAgree__FK_Ba__4E88ABD4" FromRole="LoanAgreements" ToRole="Banks" />
+          <NavigationProperty Name="Client" Relationship="Self.FK__LoanAgree__FK_Cl__4F7CD00D" FromRole="LoanAgreements" ToRole="Clients" />
+        </EntityType>
+        <EntityType Name="Offer">
+          <Key>
+            <PropertyRef Name="PK_OfferId" />
+          </Key>
+          <Property Name="PK_OfferId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Interest" Type="Single" Nullable="false" />
+          <Property Name="MinLoanAmount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="MaxLoanAmount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="MaxOfMonths" Type="Int32" Nullable="false" />
+          <Property Name="ActiveLoansNumber" Type="Int32" />
+          <Property Name="MinSeniority" Type="Int32" />
+          <Property Name="MinAge" Type="Int32" />
+          <NavigationProperty Name="Banks" Relationship="RGR_BankLoansModel.Bank_Offers" FromRole="Offer" ToRole="Bank" />
+        </EntityType>
+        <Association Name="FK__LoanAgree__FK_Ba__4E88ABD4">
+          <End Role="Banks" Type="Self.Bank" Multiplicity="0..1" />
+          <End Role="LoanAgreements" Type="Self.LoanAgreement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banks">
+              <PropertyRef Name="PK_RegNumber" />
+            </Principal>
+            <Dependent Role="LoanAgreements">
+              <PropertyRef Name="FK_Bank_RegNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoanAgree__FK_Cl__4F7CD00D">
+          <End Role="Clients" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="LoanAgreements" Type="Self.LoanAgreement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="PK_ClientId" />
+            </Principal>
+            <Dependent Role="LoanAgreements">
+              <PropertyRef Name="FK_ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RGR_BankLoansEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Banks" EntityType="Self.Bank" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="LoanAgreements" EntityType="Self.LoanAgreement" />
+          <EntitySet Name="Offers" EntityType="Self.Offer" />
+          <AssociationSet Name="FK__LoanAgree__FK_Ba__4E88ABD4" Association="Self.FK__LoanAgree__FK_Ba__4E88ABD4">
+            <End Role="Banks" EntitySet="Banks" />
+            <End Role="LoanAgreements" EntitySet="LoanAgreements" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoanAgree__FK_Cl__4F7CD00D" Association="Self.FK__LoanAgree__FK_Cl__4F7CD00D">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="LoanAgreements" EntitySet="LoanAgreements" />
+          </AssociationSet>
+          <AssociationSet Name="Bank_Offers" Association="RGR_BankLoansModel.Bank_Offers">
+            <End Role="Bank" EntitySet="Banks" />
+            <End Role="Offer" EntitySet="Offers" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="Bank_Offers">
+          <End Type="RGR_BankLoansModel.Bank" Role="Bank" Multiplicity="*" />
+          <End Type="RGR_BankLoansModel.Offer" Role="Offer" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RGR_BankLoansModelStoreContainer" CdmEntityContainer="RGR_BankLoansEntities">
+          <EntitySetMapping Name="Banks">
+            <EntityTypeMapping TypeName="RGR_BankLoansModel.Bank">
+              <MappingFragment StoreEntitySet="Banks">
+                <ScalarProperty Name="PK_RegNumber" ColumnName="PK_RegNumber" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OGRN" ColumnName="OGRN" />
+                <ScalarProperty Name="License" ColumnName="License" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="RGR_BankLoansModel.Client">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="PK_ClientId" ColumnName="PK_ClientId" />
+                <ScalarProperty Name="Passport" ColumnName="Passport" />
+                <ScalarProperty Name="TIN" ColumnName="TIN" />
+                <ScalarProperty Name="FirstName" ColumnName="Name" />
+                <ScalarProperty Name="LastName" ColumnName="Surname" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Seniority" ColumnName="Seniority" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoanAgreements">
+            <EntityTypeMapping TypeName="RGR_BankLoansModel.LoanAgreement">
+              <MappingFragment StoreEntitySet="LoanAgreements">
+                <ScalarProperty Name="PK_AgreementId" ColumnName="PK_AgreementId" />
+                <ScalarProperty Name="FK_Bank_RegNumber" ColumnName="FK_Bank_RegNumber" />
+                <ScalarProperty Name="FK_ClientId" ColumnName="FK_ClientId" />
+                <ScalarProperty Name="AgreementNumber" ColumnName="AgreementNumber" />
+                <ScalarProperty Name="Interest" ColumnName="Interest" />
+                <ScalarProperty Name="Months" ColumnName="Months" />
+                <ScalarProperty Name="LoanAmount" ColumnName="LoanAmount" />
+                <ScalarProperty Name="Payment" ColumnName="Payment" />
+                <ScalarProperty Name="ContractDate" ColumnName="ContractDate" />
+                <ScalarProperty Name="IsRepaid" ColumnName="IsRepaid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Offers">
+            <EntityTypeMapping TypeName="RGR_BankLoansModel.Offer">
+              <MappingFragment StoreEntitySet="Offers">
+                <ScalarProperty Name="PK_OfferId" ColumnName="PK_OfferId" />
+                <ScalarProperty Name="Interest" ColumnName="Interest" />
+                <ScalarProperty Name="MinLoanAmount" ColumnName="MinLoanAmount" />
+                <ScalarProperty Name="MaxLoanAmount" ColumnName="MaxLoanAmount" />
+                <ScalarProperty Name="MaxOfMonths" ColumnName="MaxOfMonths" />
+                <ScalarProperty Name="ActiveLoansNumber" ColumnName="ActiveLoansNumber" />
+                <ScalarProperty Name="MinSeniority" ColumnName="MinSeniority" />
+                <ScalarProperty Name="MinAge" ColumnName="MinAge" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Bank_Offers" TypeName="RGR_BankLoansModel.Bank_Offers" StoreEntitySet="Bank_Offers">
+            <EndProperty Name="Offer">
+              <ScalarProperty Name="PK_OfferId" ColumnName="FK_OfferId" />
+            </EndProperty>
+            <EndProperty Name="Bank">
+              <ScalarProperty Name="PK_RegNumber" ColumnName="FK_Bank_RegNumber" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

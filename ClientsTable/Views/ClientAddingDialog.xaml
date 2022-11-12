@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="ClientsTable.Views.ClientAddingDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="322.059" d:DesignWidth="313.235">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="2*" MinWidth="190"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ContentPresenter Grid.ColumnSpan="2" Content="{Binding ClientViewModel}" Margin="0,0,0,20"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1">
+            <Button Command="{Binding CloseDialogCommand}" CommandParameter="false" Content="Отмена" MinWidth="75" Height="25" IsCancel="True" Margin="0,0,20,0"/>
+            <Button Command="{Binding AddClientCommand}" x:Name="bt_add_client" Content="Добавить" MinWidth="75" Height="25" IsDefault="True"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

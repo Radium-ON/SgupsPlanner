@@ -1,0 +1,44 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xml:space="preserve">
+<!-- Диалоговые окна -->
+    <sys:String x:Key="some_data_changed_dialog_title">Есть изменения данных</sys:String>
+    <sys:String x:Key="some_data_changed_dialog_message" >Все внесённые изменения будут сохранены.&#13;Готовы продолжить?</sys:String>
+    <sys:String x:Key="offer_deleted_dialog_title" >Удаление предложения</sys:String>
+    <sys:String x:Key="offer_deleted_dialog_message" >Этим предложением владеют некоторые банки.&#13;Вы уверены, что хотите удалить его?</sys:String>
+    <sys:String x:Key="client_deleted_dialog_title" >Удаление клиента</sys:String>
+    <sys:String x:Key="client_deleted_dialog_message" >Этот клиент владеет долговыми обязательствами.&#13;Вы уверены, что хотите удалить его?</sys:String>
+    <sys:String x:Key="bank_deleted_dialog_title" >Удаление банка</sys:String>
+    <sys:String x:Key="bank_deleted_dialog_message" >Этот банк уже выдавал кредиты своим клиентам.&#13;Вы уверены, что хотите удалить его?</sys:String>
+    <sys:String x:Key="connection_error_dialog_title" >Критическая ошибка</sys:String>
+    <sys:String x:Key="connection_error_dialog_message" >База данных недоступна. Приложение не сможет работать.</sys:String>
+
+    <!--Валидация клиента -->
+    <sys:String x:Key="client_error_missing_salary">Нет данных о зарплате!</sys:String>
+    <sys:String x:Key="client_error_missing_seniority" >Не вписан трудовой стаж!</sys:String>
+    <sys:String x:Key="client_error_missing_age" >Не заполнен возраст клиента!</sys:String>
+    <sys:String x:Key="client_error_missing_tin" >Не заполнен ИНН!</sys:String>
+    <sys:String x:Key="client_error_missing_passport" >Нет паспортных данных!</sys:String>
+    <sys:String x:Key="client_error_missing_first_name" >Не заполнено имя клиента!</sys:String>
+    <sys:String x:Key="client_error_missing_lastname" >Не заполнена фамилия клиента!</sys:String>
+
+    <!--Валидация предложения -->
+    <sys:String x:Key="offer_error_active_loans_number_out_of_range">Кредитная нагрузка не может быть отрицательной.</sys:String>
+    <sys:String x:Key="offer_error_age_out_of_range" >Минимальный возраст не входит в допустимый диапазон.</sys:String>
+    <sys:String x:Key="offer_error_interest_negate" >Допускается неотрицательная процентная ставка.</sys:String>
+    <sys:String x:Key="offer_error_max_loan_amount_out_of_range" >Макс. сумма кредита должна быть больше мин. суммы кредита и не 0.</sys:String>
+    <sys:String x:Key="offer_error_min_loan_amount_out_of_range" >Мин. сумма кредита должна быть меньше макс. суммы кредита и не 0.</sys:String>
+    <sys:String x:Key="offer_error_seniority_out_of_range" >Трудовой стаж не входит в допустимый диапазон.</sys:String>
+
+    <!--Валидация банка -->
+    <sys:String x:Key="bank_error_missing_bank_name">Не заполнено наименование банка.</sys:String>
+    <sys:String x:Key="bank_error_missing_license" >Нет данных о лицензии.</sys:String>
+    <sys:String x:Key="bank_error_missing_ogrn" >ОГРН состоит из 13 цифр.</sys:String>
+
+    <!--Валидация кредитного договора -->
+    <sys:String x:Key="agreement_error_bank_is_null">Выберите кредитующий банк.</sys:String>
+    <sys:String x:Key="agreement_error_agreement_number" >Номер договора состоит только из цифр.</sys:String>
+    <sys:String x:Key="agreement_error_contract_date" >Установите дату не позже сегодняшней.</sys:String>
+
+</ResourceDictionary>

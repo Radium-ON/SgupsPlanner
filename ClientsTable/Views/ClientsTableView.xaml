@@ -1,0 +1,71 @@
+﻿<controls:ModernUserControl x:Class="ClientsTable.Views.ClientsTableView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:controls="clr-namespace:SgupsPlanner.Core.Controls;assembly=SgupsPlanner.Core"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="304.018" d:DesignWidth="652.232">
+    <controls:ModernUserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/SgupsPlanner.Core;component/Assets/ResourceDictionary.xaml"/>
+    </controls:ModernUserControl.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="NavigatedTo">
+            <prism:InvokeCommandAction Command="{Binding NavigatedToCommand}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="NavigatedFrom">
+            <prism:InvokeCommandAction Command="{Binding NavigatedFromCommand}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="NavigatingFrom">
+            <prism:InvokeCommandAction Command="{Binding NavigatingFromCommand}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="FragmentNavigation">
+            <prism:InvokeCommandAction Command="{Binding FragmentNavigationCommand}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Loaded">
+            <prism:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="IsVisibleChanged">
+            <prism:InvokeCommandAction Command="{Binding IsVisibleChangedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid Style="{StaticResource ContentRoot}">
+        <ScrollViewer>
+            <StackPanel Name="stack_all_clients">
+                <TextBlock Text="КЛИЕНТЫ" Style="{StaticResource Heading2}" />
+                <DataGrid x:Name="data_grid_clients" AutoGenerateColumns="False" CanUserAddRows="False" MaxHeight="400"
+                          SelectionMode="Single" SelectionUnit="FullRow"
+                          EnableRowVirtualization="True"
+                          ScrollViewer.CanContentScroll="True" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True"
+                          ItemsSource="{Binding ClientViewModels, UpdateSourceTrigger=PropertyChanged}"
+                          RowDetailsTemplate="{StaticResource loan_agreements_datagrid_rowdetailstemplate}">
+
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Добавить" Icon="{DynamicResource add_to_list_icon}"
+                                      Command="{Binding AddClientCommand}"/>
+
+                            <MenuItem Header="Удалить" Icon="{DynamicResource delete_icon}"
+                                          Command="{Binding DeleteClientCommand}"
+                                          CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItem}"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+
+                    <DataGrid.Columns>
+                        <mui:DataGridTextColumn Header="Имя"  Binding="{Binding FirstName, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{x:Null}"/>
+                        <mui:DataGridTextColumn Header="Фамилия" Binding="{Binding LastName, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{x:Null}" />
+                        <mui:DataGridTextColumn Header="Паспорт" Binding="{Binding Passport, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{x:Null}"/>
+                        <mui:DataGridTextColumn Header="ИНН" Binding="{Binding Tin, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{x:Null}"/>
+                        <mui:DataGridTextColumn Header="Возраст" Binding="{Binding Age, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{x:Null}"/>
+                        <mui:DataGridTextColumn Header="Стаж" Binding="{Binding Seniority, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{x:Null}"/>
+                        <mui:DataGridTextColumn Header="Зарплата" Binding="{Binding Salary, StringFormat=C, ConverterCulture='ru-RU', ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{x:Null}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</controls:ModernUserControl>
