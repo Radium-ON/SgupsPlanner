@@ -5,15 +5,15 @@ namespace SgupsPlanner.Database.Entities
 {
     public class EventDto
     {
-        public int Id { get; set; }
-        public string EventName { get; set; }
-        public string Description { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsRepeatable { get; set; }
-        public DateTime DeadlineDate { get; set; }
-        public DateTime StartNotifyDate { get; set; }
-        public RepeatInterval RepeatInterval { get; set; }
-        public DateTime CreateDate { get; set; }
+        public int Id { get; }
+        public string EventName { get; }
+        public string Description { get; }
+        public bool IsActive { get; }
+        public bool IsRepeatable { get; }
+        public DateTime DeadlineDate { get; }
+        public DateTime StartNotifyDate { get; }
+        public RepeatInterval RepeatInterval { get; }
+        public DateTime CreateDate { get; }
 
         public List<FileDto> Files { get; private set; }
 

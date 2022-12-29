@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using BankLoansDataModel.Services;
 using CommonServiceLocator;
 using FirstFloor.ModernUI.Presentation;
 using FirstFloor.ModernUI.Windows.Controls;
@@ -35,7 +34,7 @@ namespace SgupsPlanner
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register(typeof(IBankEntitiesContext), typeof(BankEntitiesContext));
+            //containerRegistry.Register(typeof(IBankEntitiesContext), typeof(BankEntitiesContext));
             containerRegistry.RegisterDialogWindow<PrismModernDialog>();
         }
 

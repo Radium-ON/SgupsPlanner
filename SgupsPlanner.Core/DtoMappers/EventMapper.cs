@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using SgupsPlanner.Core.ViewModels;
 using SgupsPlanner.Database.Entities;
@@ -7,7 +8,7 @@ namespace SgupsPlanner.Core.DtoMappers
 {
     public static class EventMapper
     {
-        public static EventDto ConvertToDto(EventViewModel vm)
+        public static EventDto ConvertToDto(EventObservable vm)
         {
             return new EventDto(
                 vm.EventId,
@@ -18,21 +19,24 @@ namespace SgupsPlanner.Core.DtoMappers
                 vm.DeadlineDate,
                 vm.StartNotifyDate,
                 vm.RepeatInterval,
-                vm.CreateDate,vm.Files.ToList()
+                vm.CreateDate,
+                FileMapper.ConvertToListDto(vm.Files.ToList()).ToList()
             );
         }
 
-        public static EventViewModel ConvertFromDto(EventDto dto)
+        public static EventObservable ConvertFromDto(EventDto dto)
         {
-            return new EventViewModel(dto);
+            return new EventObservable(dto.EventName, dto.Description, dto.IsActive, dto.IsRepeatable, dto.DeadlineDate,
+                dto.CreateDate, dto.StartNotifyDate, dto.RepeatInterval,
+                new ObservableCollection<FileObservable>(FileMapper.ConvertFromListDto(dto.Files)));
         }
 
-        public static IEnumerable<EventDto> ConvertToListDto(List<EventViewModel> observables)
+        public static IEnumerable<EventDto> ConvertToListDto(List<EventObservable> observables)
         {
             return observables?.Select(ConvertToDto);
         }
 
-        public static IEnumerable<EventViewModel> ConvertFromListDto(List<EventDto> dtos)
+        public static IEnumerable<EventObservable> ConvertFromListDto(List<EventDto> dtos)
         {
             return dtos?.Select(ConvertFromDto);
         }

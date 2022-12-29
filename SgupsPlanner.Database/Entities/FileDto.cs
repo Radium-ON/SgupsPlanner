@@ -4,10 +4,10 @@ namespace SgupsPlanner.Database.Entities
 {
     public class FileDto
     {
-        public int Id { get; set; }
-        public int EventId { get; set; }
-        public string FileName { get; set; }
-        public DateTime CreateDate { get; set; }
+        public int Id { get; }
+        public int EventId { get; }
+        public string FileName { get; }
+        public DateTime CreateDate { get; }
 
         public FileDto(int id, int eventId, string fileName, DateTime date)
         {

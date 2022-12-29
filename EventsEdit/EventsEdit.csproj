@@ -2,19 +2,19 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <LangVersion>8.0</LangVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A2427F71-7593-4235-8F32-9685710AD33C}</ProjectGuid>
+    <ProjectGuid>{C9C6132F-59C3-4C90-BE5A-1BF0CC017B69}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OffersTable</RootNamespace>
-    <AssemblyName>OffersTable</AssemblyName>
+    <RootNamespace>EventsEdit</RootNamespace>
+    <AssemblyName>EventsEdit</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,7 +24,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>8</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,7 +32,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>8</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -52,7 +50,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OffersTableModule.cs" />
+    <Compile Include="Data\EventEditLocalDataSource.cs" />
+    <Compile Include="Data\EventEditRepository.cs" />
+    <Compile Include="Data\IEventEditDataSource.cs" />
+    <Compile Include="Data\IEventEditRepository.cs" />
+    <Compile Include="EventsEditModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -66,14 +68,19 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Services\EventEditOptions.cs" />
     <Compile Include="Services\ModernLinkService.cs" />
-    <Compile Include="ViewModels\OfferAddingDialogViewModel.cs" />
-    <Compile Include="ViewModels\OffersTableViewModel.cs" />
-    <Compile Include="Views\OffersTableView.xaml.cs">
-      <DependentUpon>OffersTableView.xaml</DependentUpon>
+    <Compile Include="ViewModels\BankAddingDialogViewModel.cs" />
+    <Compile Include="ViewModels\EventsEditViewModel.cs" />
+    <Compile Include="ViewModels\OfferToBankAddingDialogViewModel.cs" />
+    <Compile Include="Views\BankAddingDialog.xaml.cs">
+      <DependentUpon>BankAddingDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\OfferAddingDialog.xaml.cs">
-      <DependentUpon>OfferAddingDialog.xaml</DependentUpon>
+    <Compile Include="Views\EventsEditView.xaml.cs">
+      <DependentUpon>EventsEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OfferToBankAddingDialog.xaml.cs">
+      <DependentUpon>OfferToBankAddingDialog.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -85,7 +92,16 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SgupsPlanner.Core\SgupsPlanner.Core.csproj">
+      <Project>{fe4369f7-41e9-48c7-9875-f6a105ac95a5}</Project>
+      <Name>SgupsPlanner.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SgupsPlanner.Database\SgupsPlanner.Database.csproj">
+      <Project>{B3B9549C-042E-444F-ADF9-C813F2FC7014}</Project>
+      <Name>SgupsPlanner.Database</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework">
       <Version>6.4.4</Version>
@@ -100,19 +116,21 @@
     <PackageReference Include="QuickConverter">
       <Version>1.2.5</Version>
     </PackageReference>
+    <PackageReference Include="Unity.Abstractions">
+      <Version>5.11.6</Version>
+    </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\SgupsPlanner.Core\SgupsPlanner.Core.csproj">
-      <Project>{fe4369f7-41e9-48c7-9875-f6a105ac95a5}</Project>
-      <Name>SgupsPlanner.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\OffersTableView.xaml">
+    <Page Include="Views\BankAddingDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\OfferAddingDialog.xaml">
+    <Page Include="Views\EventsEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\OfferToBankAddingDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

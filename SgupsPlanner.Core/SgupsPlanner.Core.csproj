@@ -39,12 +39,6 @@
     <Reference Include="CommonServiceLocator, Version=2.0.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.5\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="FirstFloor.ModernUI, Version=1.0.9.0, Culture=neutral, PublicKeyToken=bc9b0c37bf06c6a9, processorArchitecture=MSIL">
       <HintPath>..\packages\ModernUI.WPF.1.0.9\lib\net45\FirstFloor.ModernUI.dll</HintPath>
     </Reference>
@@ -95,22 +89,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\ModernUserControl.cs" />
+    <Compile Include="DtoMappers\EventMapper.cs" />
+    <Compile Include="DtoMappers\FileMapper.cs" />
     <Compile Include="Extensions\AsyncObservableCollection.cs" />
     <Compile Include="CoreModule.cs" />
     <Compile Include="Events\ClientAddedEvent.cs" />
     <Compile Include="Extensions\DialogServiceExtensions.cs" />
     <Compile Include="Interfaces\IModernLinkService.cs" />
-    <Compile Include="ViewModels\AgreementViewModel.cs" />
-    <Compile Include="ViewModels\BankViewModel.cs" />
-    <Compile Include="ViewModels\ClientViewModel.cs" />
-    <Compile Include="ViewModels\EventViewModel.cs" />
-    <Compile Include="ViewModels\FileViewModel.cs" />
+    <Compile Include="ResponseWrapper\Error.cs" />
+    <Compile Include="ResponseWrapper\IResponseWrapper.cs" />
+    <Compile Include="ResponseWrapper\Success.cs" />
+    <Compile Include="ViewModels\EventObservable.cs" />
+    <Compile Include="ViewModels\EventEditViewModel.cs" />
+    <Compile Include="ViewModels\FileObservable.cs" />
+    <Compile Include="ViewModels\FileEditViewModel.cs" />
     <Compile Include="ViewModels\ModernViewModelBase.cs" />
-    <Compile Include="ViewModels\OfferViewModel.cs" />
     <Compile Include="ViewModels\OkDialogViewModel.cs" />
     <Compile Include="ViewModels\OkCancelDialogViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\ValidatedDataEntityViewModel.cs" />
     <Compile Include="ViewModels\ValidatedViewModel.cs" />
     <Compile Include="Views\OkDialog.xaml.cs">
       <DependentUpon>OkDialog.xaml</DependentUpon>
@@ -120,10 +116,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BankLoansDataModel\BankLoansDataModel.csproj">
-      <Project>{836BA870-E560-4EC7-81C2-6C7C4A465EB7}</Project>
-      <Name>BankLoansDataModel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SgupsPlanner.Database\SgupsPlanner.Database.csproj">
       <Project>{B3B9549C-042E-444F-ADF9-C813F2FC7014}</Project>
       <Name>SgupsPlanner.Database</Name>

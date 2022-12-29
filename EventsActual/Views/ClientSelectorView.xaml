@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="EventsActual.Views.ClientSelectorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:qc="http://QuickConverter.CodePlex.com/"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="472.689" d:DesignWidth="307.143"
+             DataContext="{Binding}">
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/SgupsPlanner.Core;component/Assets/ResourceDictionary.xaml"/>
+    </UserControl.Resources>
+    <Grid MinWidth="300">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="stack_client_selector">
+            <TextBlock Text="ВЫБЕРИТЕ КЛИЕНТА" Margin="10,0,0,0" Style="{StaticResource Heading2}"/>
+            <StackPanel Orientation="Horizontal" Margin="10,10,10,0" VerticalAlignment="Center">
+                <ComboBox x:Name="cmb_client"   MinHeight="24" MinWidth="250"
+                      ItemsSource="{Binding ClientsCollectionView, IsAsync=True}" IsSynchronizedWithCurrentItem="True" FontSize="14">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding FirstName}" Margin="0,0,4,0"/>
+                                <TextBlock Text="{Binding LastName}"/>
+                                <TextBlock Text=", паспорт:" Margin="0,0,4,0"/>
+                                <TextBlock Text="{Binding Passport}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <mui:ModernButton Margin="10,0,0,0" IconHeight="14" IconWidth="14" EllipseDiameter="24" IconData="{DynamicResource remove_filter_icon}"
+                              Command="{Binding RemoveClientFilterCommand}" />
+            </StackPanel>
+            <Grid x:Name="grid_client_info" Margin="10,20,10,10"
+                  DataContext="{Binding ElementName=cmb_client, Path=SelectedItem, UpdateSourceTrigger=PropertyChanged}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="60"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="ФИО" Margin="0,0,0,5" Style="{StaticResource Emphasis}"/>
+                <TextBlock x:Name="tb_fullname" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="FirstName"/>
+                            <Binding Path="LastName"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Text="Возраст" Grid.Row="1" Grid.Column="0" Margin="0,0,0,5" Style="{StaticResource Emphasis}"/>
+                <TextBlock x:Name="tb_age" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Age}" Grid.Column="1"/>
+                <TextBlock Text="Стаж" Grid.Row="2" Grid.Column="0" Margin="0,0,0,5" Style="{StaticResource Emphasis}"/>
+                <TextBlock x:Name="tb_seniority" Grid.Row="2" TextWrapping="Wrap" Text="{Binding Seniority}" Grid.Column="1"/>
+                <TextBlock Text="Зарплата" Grid.Row="3" Grid.Column="0" Margin="0,0,0,5" Style="{StaticResource Emphasis}"/>
+                <TextBlock x:Name="tb_salary" Grid.Row="3" TextWrapping="Wrap" Text="{Binding Salary, StringFormat=C, ConverterCulture='ru-RU'}" Grid.Column="1"/>
+                <TextBlock Text="Кредиты" Grid.Row="4" Grid.Column="0" Margin="0,0,0,5" Style="{StaticResource Emphasis}"/>
+                <TextBlock x:Name="tb_active_loans" Grid.Row="4" TextWrapping="Wrap" Text="{Binding Path=LoanAgreements.Count}" Grid.Column="1"/>
+            </Grid>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <StackPanel x:Name="stack_loan_amount" Margin="0,5">
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Сумма кредита" Margin="10,0,0,10" Style="{StaticResource Heading2}"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10" HorizontalAlignment="Center">
+                    <TextBox x:Name="input_loan_amount"  MinWidth="100" FontSize="14" Text="{Binding LoanAmountInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=C, ConverterCulture='ru-RU'}"/>
+                    <mui:ModernButton Margin="10,0,0,0" IconHeight="14" IconWidth="14" EllipseDiameter="24" IconData="{DynamicResource remove_filter_icon}"
+                                              Command="{Binding RemoveLoanAmountFilterCommand}" />
+                </StackPanel>
+                <Slider x:Name="slider_loan_amount" Maximum="100000000" TickFrequency="1000" IsSnapToTickEnabled="True" Margin="10,0,10,0"
+                        Value="{Binding ElementName=input_loan_amount, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel x:Name="stack_duration" Margin="0,5">
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Срок в месяцах" Margin="10,0,0,10" Style="{StaticResource Heading2}"/>
+                <StackPanel Margin="0,0,0,10" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <TextBox x:Name="input_months" MinWidth="100" Text="{Binding MonthsInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14"/>
+                    <mui:ModernButton Margin="10,0,0,0" IconHeight="14" IconWidth="14" EllipseDiameter="24" IconData="{DynamicResource remove_filter_icon}"
+                                  Command="{Binding RemoveMonthsFilterCommand}"/>
+                </StackPanel>
+                <Slider x:Name="slider_months" Maximum="480" TickFrequency="1" IsSnapToTickEnabled="True" Margin="10,0,10,0"
+                        Value="{Binding ElementName=input_months, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel x:Name="stack_interest" Margin="0,5">
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Ставка %" Margin="10,0,0,10" Style="{StaticResource Heading2}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                    <TextBox x:Name="input_interest"  MinWidth="100" Text="{Binding InterestInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=P2}" FontSize="14"/>
+                    <mui:ModernButton Margin="10,0,0,0" IconHeight="14" IconWidth="14" EllipseDiameter="24" IconData="{DynamicResource remove_filter_icon}"
+                                  Command="{Binding RemoveInterestFilterCommand}"/>
+                </StackPanel>
+                <Slider x:Name="slider_interest" Maximum="1.0" TickFrequency="0.001" IsSnapToTickEnabled="True" Margin="10,0,10,0"
+                        Value="{Binding ElementName=input_interest, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

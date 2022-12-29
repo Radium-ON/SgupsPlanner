@@ -98,10 +98,6 @@
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BankLoansDataModel\BankLoansDataModel.csproj">
-      <Project>{836ba870-e560-4ec7-81c2-6c7c4a465eb7}</Project>
-      <Name>BankLoansDataModel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SgupsPlanner.Core\SgupsPlanner.Core.csproj">
       <Project>{fe4369f7-41e9-48c7-9875-f6a105ac95a5}</Project>
       <Name>SgupsPlanner.Core</Name>

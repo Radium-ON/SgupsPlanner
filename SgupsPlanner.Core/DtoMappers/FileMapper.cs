@@ -7,19 +7,19 @@ namespace SgupsPlanner.Core.DtoMappers
 {
     public static class FileMapper
     {
-        public static FileDto ConvertToDto(FileViewModel observable)
+        public static FileDto ConvertToDto(FileObservable observable)
         {
             return new FileDto(observable.FileId,observable.EventId,observable.FileName,observable.CreateDate);
         }
-        public static FileViewModel ConvertFromDto(FileDto dto)
+        public static FileObservable ConvertFromDto(FileDto dto)
         {
-            return new FileViewModel(dto);
+            return new FileObservable(dto.FileName,dto.CreateDate,dto.EventId);
         }
-        public static IEnumerable<FileDto> ConvertToListDto(List<FileViewModel> observables)
+        public static IEnumerable<FileDto> ConvertToListDto(List<FileObservable> observables)
         {
             return observables?.Select(ConvertToDto);
         }
-        public static IEnumerable<FileViewModel> ConvertFromListDto(List<FileDto> dtos)
+        public static IEnumerable<FileObservable> ConvertFromListDto(List<FileDto> dtos)
         {
             return dtos?.Select(ConvertFromDto);
         }
